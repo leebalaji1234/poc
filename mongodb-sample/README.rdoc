@@ -5,24 +5,40 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
+* Ruby version 2.2.0
 
-* System dependencies
+* System dependencies 
+   
+   OS - Ubuntu 14.04
+   DB - Mongodb 
 
 * Configuration
+ 
+ 	git clone git@github.com:leebalaji1234/poc.git
+
+ 	bundle install
 
 * Database creation
+	rake db:create
+	   or  
+	rake db:setup
 
 * Database initialization
+  Type "mongo" on the command terminal . Mongo shell will execute
+  	show dbs
+  	use db <name>
 
 * How to run the test suite
+	rails s
 
-* Services (job queues, cache servers, search engines, etc.)
+	forward to different port
+
+	rvmsudo rails s -p80
+
+	use deamon service using sys process
+
+	rvmsudo rails s -p80 -d
 
 * Deployment instructions
 
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+   All instructions relates to this project posted in the wiki link : https://github.com/leebalaji1234/poc/wiki
