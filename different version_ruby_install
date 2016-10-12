@@ -1,0 +1,88 @@
+----------------------------------------
+----------------------------------
+Install Passenger Module in server
+----------------------------------
+----------------------------------------
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7
+sudo nano /etc/apt/sources.list.d/passenger.list
+sudo chown root: /etc/apt/sources.list.d/passenger.list
+sudo chmod 600 /etc/apt/sources.list.d/passenger.list
+sudo apt-get update
+sudo apt-get install libapache2-mod-passenger
+sudo a2enmod passenger
+  sudo service apache2 restart
+------------------------------------------------------------------------------------------------------------------------------------
+b) Install Passenger gem for diiferent ruby version used by RVM
+rvm use --default 2.1.5
+gem install passenger
+
+passenger-install-apache2-module
+
+<VirtualHost *:7777>
+    PassengerDefaultRuby /home/deploy/.rvm/gems/ruby-2.2.0/wrappers/ruby
+    DocumentRoot /home/deploy/.rvm/gems/ruby-2.1.5/gems/rubycas-server-1.1.2/public
+    RailsEnv development
+   
+    <Directory "/home/deploy/.rvm/gems/ruby-2.1.5/gems/rubycas-server-1.1.2/public">
+        Require all granted
+        AllowOverride all
+        Allow from all
+    </Directory>
+</VirtualHost>
+
+
+
+****************************************************************************************************************************
+
+
+1) rvm install 2.1.5
+2) rvm use ruby-2.1.5 --default
+3) gem install bundler
+4) gem install rubycas-server
+5) cd /home/siva/.rvm/gems/ruby-2.1.5/gems/rubycas-server-1.1.2/
+cd /home/balaji/.rvm/gems/ruby-2.1.5/gems/rubycas-server-1.1.2/
+
+6) before bundle install add the below gem in gemfile
+source "http://rubygems.org"
+ gem "bcrypt"
+ gem "mysql2"
+ gem "activerecord-mysql2-adapter"
+gemspec
+
+7) bundle install
+
+8) config.yml
+---------------
+
+server: webrick
+port: 8081
+
+database:
+ adapter: mysql
+ database: casserver
+ username: root
+ password: root123
+ host: localhost
+ reconnect: true
+
+
+authenticator:
+ class: CASServer::Authenticators::SQL
+  database:
+   adapter: mysql
+   database: cas_authenticator
+   user_table: cas_users
+   username_column: root
+   password_column: root123
+
+
+
+
+9) rubycas-server -c /home/siva/Desktop/config.yml
+
+
+
+
+
+
+rubycas-server -c /home/balaji/.rvm/gems/ruby-2.1.5/gems/rubycas-server-1.1.2/config.yml
